@@ -23,10 +23,10 @@ public class ArrayList {
         
         System.out.println(collection.length());
         System.out.println(collection.get(3));       
-        collection.splice(2, 1); // removing Apr
+        collection.splice(3, 1); // removing Apr
         System.out.println(collection.length());
         System.out.println(collection.get(3));
-        collection.splice(2, 0, "Apr"); // returning Apr
+        collection.splice(3, 0, "Apr"); // returning Apr
         System.out.println(collection.get(3));
         System.out.println(collection.length());
         collection.unshift("Left");
