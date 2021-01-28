@@ -48,7 +48,7 @@ public class CustomList<T> {
     }
     
     public void splice(int offset, int count) {
-        int delete = offset + 1 + count > this.length() ? this.length() - offset - 1 : count;
+        int delete = offset + count > this.length() ? this.length() - offset : count;
         T[] result = (T[])new Object[this.length() - delete];
         if (offset < 0 || offset > this.length()) {
             throw new IndexOutOfBoundsException("Неверный индекс элемента");
@@ -58,10 +58,10 @@ public class CustomList<T> {
             throw new IllegalArgumentException("Неверный аргумент");
         }
         
-        System.arraycopy(this.body, 0, result, 0, offset + 1);
+        System.arraycopy(this.body, 0, result, 0, offset);
         
-        if (offset + 1 + delete < this.length()) {
-            System.arraycopy(this.body, offset + 1 + delete, result, offset + 1, this.length() - offset - 1 - delete);
+        if (offset + delete < this.length()) {
+            System.arraycopy(this.body, offset + delete, result, offset, this.length() - offset - delete);
         }
         
         this.body = result;
@@ -70,9 +70,9 @@ public class CustomList<T> {
     public void splice(int offset, int count, T item) {
         this.splice(offset, count);
         T[] result = (T[])new Object[this.length() + 1];
-        System.arraycopy(this.body, 0, result, 0, offset + 1);
-        result[offset + 1] = item;
-        System.arraycopy(this.body, offset + 1, result, offset + 2, this.length() - offset - 1);
+        System.arraycopy(this.body, 0, result, 0, offset);
+        result[offset] = item;
+        System.arraycopy(this.body, offset, result, offset + 1, this.length() - offset);
         
         this.body = result;
     }
