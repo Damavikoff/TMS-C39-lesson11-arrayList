@@ -47,21 +47,15 @@ public class CustomList<T> {
     }
     
     public void splice(int offset, int count) {
-        if (offset < 0 || offset >= this.length()) {
-            throw new IndexOutOfBoundsException("Неверный индекс элемента");
-        }
+        count = Math.max(count, 0);
         
         if (count == 0) {
             return;
         }
         
-        if (count < 0) {
-            throw new IllegalArgumentException("Неверный аргумент");
-        }
-        
+        offset = Math.max(Math.min(offset, this.length() - 1), 0);
         int delete = offset + count > this.length() ? this.length() - offset : count;
         T[] result = (T[])new Object[this.length() - delete];
-        
         System.arraycopy(this.body, 0, result, 0, offset);
         
         if (offset + delete < this.length()) {
@@ -72,7 +66,9 @@ public class CustomList<T> {
     }
     
     public void splice(int offset, int count, T item) {
+        count = offset > this.length() ? 0 : count;
         this.splice(offset, count);
+        offset = Math.max(Math.min(offset, this.length()), 0);
         T[] result = (T[])new Object[this.length() + 1];
         System.arraycopy(this.body, 0, result, 0, offset);
         result[offset] = item;
