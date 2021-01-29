@@ -10,8 +10,7 @@ package custom.util;
  * @author SharpSchnitzel
  */
 public class CustomList<T> {
-    
-    private T body[];
+     private T body[];
     
     public CustomList() {
         this.body = (T[])new Object[0];
@@ -26,7 +25,7 @@ public class CustomList<T> {
     }
     
     public T get(int index) {
-        if (index < 0 || index > this.length() - 1) {
+        if (index < 0 || index >= this.length()) {
             throw new IndexOutOfBoundsException("Неверный индекс элемента");
         } else {
             return this.body[index];
@@ -48,15 +47,20 @@ public class CustomList<T> {
     }
     
     public void splice(int offset, int count) {
-        int delete = offset + count > this.length() ? this.length() - offset : count;
-        T[] result = (T[])new Object[this.length() - delete];
-        if (offset < 0 || offset > this.length()) {
+        if (offset < 0 || offset >= this.length()) {
             throw new IndexOutOfBoundsException("Неверный индекс элемента");
+        }
+        
+        if (count == 0) {
+            return;
         }
         
         if (count < 0) {
             throw new IllegalArgumentException("Неверный аргумент");
         }
+        
+        int delete = offset + count > this.length() ? this.length() - offset : count;
+        T[] result = (T[])new Object[this.length() - delete];
         
         System.arraycopy(this.body, 0, result, 0, offset);
         
@@ -76,5 +80,4 @@ public class CustomList<T> {
         
         this.body = result;
     }
-    
 }
